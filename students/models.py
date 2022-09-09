@@ -19,6 +19,6 @@ class Course(models.Model):
     course_name = models.CharField(max_length=100)
     credit = models.PositiveIntegerField()
 
-class EnrolledCourse(models.Model):
+class EnrolledCourses(models.Model):
     student_number = models.ForeignKey(to="Student", to_field="student_number", on_delete=models.CASCADE)
     course_number = models.ForeignKey(to="Course", to_field="course_number", on_delete=models.CASCADE)

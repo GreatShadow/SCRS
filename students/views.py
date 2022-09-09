@@ -1,7 +1,7 @@
 from django.shortcuts import render
 
 from .forms import StudentLoginForm
-from .models import Student
+from .models import Student, EnrolledCourses, Course
 
 # Create your views here.
 def index(request):
@@ -15,8 +15,16 @@ def index(request):
         if not student_object:
             form.add_error("password", "Password is wrong or account is not existing")
             return render(request, 'index.html', {'form':form})
-
-    return HttpResponse("Success")
+        request.session["info"] = student_object.student_number
+        return redirect('/home/')
+    return render(request, 'index.html', {'form':form})
 
 def home(request):
-    return render(request, 'home.html')
+    student_number = request.session.get("info")
+    erdcourses = EnrolledCourses.objects.filter(student_number=student_number)
+    courses = list()
+    for erdcourse in erdcourses:
+        course.append(Course.objects.filter(erdcourse.course_number))
+    return render(request, 'home.html', {
+        'courses': courses
+    })
