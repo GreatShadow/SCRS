@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from .forms import StudentLoginForm
 from .models import Student, EnrolledCourses, Course
@@ -24,7 +24,9 @@ def home(request):
     erdcourses = EnrolledCourses.objects.filter(student_number=student_number)
     courses = list()
     for erdcourse in erdcourses:
-        course.append(Course.objects.filter(erdcourse.course_number))
+        courses.append(Course.objects.get(course_number=erdcourse.course_number.course_number))
+        print(erdcourse.course_number.course_number)
+        print(Course.objects.get(course_number=erdcourse.course_number.course_number))
     return render(request, 'home.html', {
         'courses': courses
     })

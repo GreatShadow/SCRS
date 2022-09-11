@@ -5,11 +5,9 @@ class Middleware(MiddlewareMixin):
     def process_request(self, request):
         if request.path_info == "/":
             return
-        
-        if request.path_info == "/home/":
-            return
 
         info = request.session.get("info")
         if info:
             return
+            
         return redirect('/')
