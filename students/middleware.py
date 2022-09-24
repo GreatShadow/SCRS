@@ -3,6 +3,9 @@ from django.shortcuts import redirect
 
 class Middleware(MiddlewareMixin):
     def process_request(self, request):
+        if request.path_info.startswith("/admin"):
+            return
+            
         if request.path_info == "/":
             return
 
