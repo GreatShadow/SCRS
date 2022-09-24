@@ -5,6 +5,7 @@ from select import select
 from unittest import mock
 from django.core.management.base import BaseCommand, CommandError
 import math
+from SCRS.settings import N
 from students.models import Student, Course, EnrolledCourses
 
 
@@ -33,7 +34,7 @@ class Command(BaseCommand):
         for course_number in range(1, 101):
             course = Course()
             course.course_number = course_number
-            course.course_name = f'CS{course_number}'
+            course.course_name = f'Course-{course_number}'
             print(f'ganerate course {course.course_name}')
             course.credit = random.randint(1, 5)
             course.selected_ratio = random.randint(20, 90) / 100.0
@@ -57,9 +58,15 @@ class Command(BaseCommand):
             student.current_year = '2022'
             student.field_of_study = ''
             student.gpa = random.randint(200, 400) / 100.0
-            student.grade = random.randint(1, 4)
-            student.credits = random.randint(10, 60)
-            student.age = random.randint(16, 22)
+
+            student.interested_in_math = random.randint(0, 10)
+            student.interested_in_cs = random.randint(0, 10)
+            student.interested_in_art = random.randint(0, 10)
+            student.interested_in_history = random.randint(0, 10)
+            student.interested_in_literature = random.randint(0, 10)
+            student.interested_in_law = random.randint(0, 10)
+            student.interested_in_philosophy = random.randint(0, 10)
+            student.interested_in_pedagogy = random.randint(0, 10)
 
             student.mocked = True
             student.save()
@@ -79,7 +86,7 @@ class Command(BaseCommand):
                 enrolled_courses.course_number = course
                 enrolled_courses.mocked = True
                 enrolled_courses.save()
-                print(f'generate {student}-{course}')
+                print(f'generate EnrolledCourses: {student}-{course}')
 
 
 
@@ -102,7 +109,6 @@ class Command(BaseCommand):
 
         # generate featur vector of a course
         seed_course_vector = course_to_vector(seed_course)
-        N = 20
         course_similarity = dict()
         for course in Course.objects.filter(mocked=True):
             if course.course_number == seed_course.course_number:
@@ -113,11 +119,8 @@ class Command(BaseCommand):
 
         sorted_course_items = sorted(course_similarity.items(), key=lambda x: x[1], reverse=True)
         
-        select_courses = []
-        for index, item in enumerate(sorted_course_items):
-            if index >= N:
-                break
-
+        select_courses = [seed_course.course_name]
+        for index, item in enumerate(sorted_course_items[:N-1]):
             select_courses.append(item[0])
 
         # build vector for all students with the selected courses
@@ -134,18 +137,27 @@ class Command(BaseCommand):
             student_course_vectors[student.student_number] = student_vector
 
         # save student vectors for predict
-        json.dump(select_courses, open("select_courses.json", "w+"), indent=True)
-        json.dump(student_course_vectors, open("student_course_vectors.json", "w+"), indent=True)
+        json.dump(select_courses, open("models/select_courses.json", "w+"), indent=True)
+        json.dump(student_course_vectors, open("models/student_course_vectors.json", "w+"), indent=True)
 
         # build vector for all students with their own features
         def student_to_vector(student):
             # normal features
-            return [student.gpa / 4.0, student.age / 100.0, student.grade / 4, student.credits / 100]
+            return [
+                student.interested_in_math / 10,
+                student.interested_in_cs / 10,
+                student.interested_in_art / 10,
+                student.interested_in_history / 10,
+                student.interested_in_literature / 10,
+                student.interested_in_law / 10,
+                student.interested_in_philosophy / 10,
+                student.interested_in_pedagogy / 10,
+            ]
 
 
-        student_feature_vectors = dict()
+        student_preferences_vectors = dict()
         for student in Student.objects.all():
-            student_feature_vectors[student.student_number] = student_to_vector(student)
+            student_preferences_vectors[student.student_number] = student_to_vector(student)
         
-        json.dump(student_feature_vectors, open("student_feature_vectors.json", "w+"), indent=True)
+        json.dump(student_preferences_vectors, open("models/student_preferences_vectors.json", "w+"), indent=True)
 
