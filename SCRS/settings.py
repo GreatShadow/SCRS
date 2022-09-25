@@ -47,8 +47,8 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'students.middleware.Middleware'
+    'django.middleware.clickjacking.XFrameOptionsMiddleware'
+   # 'students.middleware.Middleware'
 ]
 
 ROOT_URLCONF = 'SCRS.urls'
