@@ -17,6 +17,7 @@ class Student(models.Model):
 class Course(models.Model):
     course_number = models.PositiveIntegerField(unique=True)
     course_name = models.CharField(max_length=100)
+    course_field = models.CharField(max_length=100, default="")
     credit = models.PositiveIntegerField()
 
 class EnrolledCourses(models.Model):

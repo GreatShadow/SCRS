@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block body %}
+<table border="1px" width="600px" height="100%">
+   <tr><th>course_number</th>
+   <th >course_name</th>
+   <th>credit</th>
+</tr>
+   {% for course_detail in course_detail %}
+    <tr  >
+    <td >{{ course_detail.course_number}}</td>
+    <td  >{{ course_detail.course_name}}</td>
+    <td  >{{ course_detail.credit}}</td>
+    <br>
+    {% endfor %}   
+</tr>
+</table>
+
+<!-- <form action="{%url 'course2' %}">
+   <input type="search">
+   <input type="submit">
+</form> -->
+<a class="a1" href="{%url 'course2' %}">number</a>
+<a class="a1" href="{%url 'course3' %}">name</a>
+<a class="a1" href="{%url 'course4' %}">credit</a>
+<style>
+   table,tr,td,th{
+      border: 1px solid yellowgreen;
+   }
+   .a1{
+      background-color: whitesmoke;
+      font-style: normal;
+      flood-color: coral;
+      font-family:"SimHei";
+      color:black;
+      font-size: 20px;
+      
+
+
+</style>
+
+{% endblock %}
