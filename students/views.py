@@ -1,3 +1,4 @@
+from importlib.resources import contents
 from django.shortcuts import render, redirect
 
 from .forms import StudentLoginForm
@@ -30,3 +31,8 @@ def home(request):
     return render(request, 'home.html', {
         'courses': courses
     })
+    
+    def runoob(request):
+        contents = {}
+        contents['']=''
+        return render(request,'test.html',contents)
