@@ -33,4 +33,4 @@ def home(request):
     })
     
 def runoob(request):
-    return render(request,'test.html')
+    return render(request,'about.html')
