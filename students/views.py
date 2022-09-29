@@ -32,7 +32,5 @@ def home(request):
         'courses': courses
     })
     
-    def runoob(request):
-        contents = {}
-        contents['']=''
-        return render(request,'test.html',contents)
+def runoob(request):
+    return render(request,'test.html')
