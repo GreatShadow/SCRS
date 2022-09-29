@@ -36,11 +36,20 @@ def home(request):
 def course(request):
     student_number = request.session.get("info")
     data_dict = {}
-    value = request.GET.get('q')
-    if value:
-        data_dict["id"] = value
+    xx = request.GET.get('q')
+    if xx:
+        data_dict["course_number__contains"] = xx
     #all
-    courses_list = Course.objects.filter(**data_dict)
+    # 
+    # class search(View):
+    #def get(self,request):
+        #chaxungj = request.GET
+        #c_d = Course.objects.all().filter(course_name=request.GET["search"])
+        #return render(request, 'search.html',{'search':request.GET["search"],'c_d':c_d})
+    #def post(self,request):
+        #return render(request, 'search.html')
+#
+    courses_list = Course.objects.all().filter(**data_dict)
     return render(request, 'course.html', {
         'courses': courses_list
     })
