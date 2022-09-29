@@ -30,3 +30,5 @@ def home(request):
     return render(request, 'home.html', {
         'courses': courses
     })
+def runoob(request):
+    return render(request,'About us.html')
