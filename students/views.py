@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 
 from .forms import StudentLoginForm
 from .models import Student, EnrolledCourses, Course
-
+from django.views import View
 # Create your views here.
 def index(request):
     if request.method == "GET":
@@ -30,3 +30,16 @@ def home(request):
     return render(request, 'home.html', {
         'courses': courses
     })
+
+def course(request):
+    courses = Course.objects.all()
+    return render(request, 'course.html', {
+        'courses': courses})
+
+class search(View):
+    def get(self,request):
+        chaxungj = request.GET
+        c_d = Course.objects.all().filter(course_name=request.GET["search"])
+        return render(request, 'search.html',{'search':request.GET["search"],'c_d':c_d})
+    def post(self,request):
+        return render(request, 'search.html')

@@ -1,11 +1,10 @@
 {% extends "base.html" %}
-
-{% block body %}
 {%load static%}
+{% block body %}
+
 <style>
     body{
         background-color: bisque;
-
     }
 
    
@@ -37,7 +36,7 @@
         
         background-color: bisque;
         position: absolute;
-        right: 20px;
+        right: 100px;
         top: 200px;
         color: coral;
     }
@@ -46,28 +45,20 @@
         border-radius: 5%;
     }
 </style>
-<h1>Course Overview</h1>
 <img src="{% static 'R.jpg'%}" alt="">
-      
-  
-        <table>
-            <tr><th>coursename</th>
-                <th>coursenumber</th>
-                <th>credit</th>
-            
-            </tr>
-            {% for course in courses %}
-            <tr><td>{{course.course_name}}</td>
-                <td>{{course.course_number}}</td>
-                <td>{{course.credit}}</td></tr>
-            {% endfor %}
-            
-        </table>
-       
-
-<form class='form1' action="{%url 'search'%}" method="get">
-    <input type="search" name="search">
-    <input type="submit" name="Search" value="Search">
-</form>
-
+<h1>Course Overview</h1>
+<table>
+    <tr><th>coursename</th>
+        <th>coursenumber</th>
+        <th>credit</th>
+    
+    </tr>
+    {% for course in c_d %}
+    <tr><td>{{course.course_name}}</td>
+        <td>{{course.course_number}}</td>
+        <td>{{course.credit}}</td>
+    </tr>
+    {% endfor %}
+    
+</table>
 {% endblock %}
