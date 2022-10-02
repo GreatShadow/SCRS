@@ -27,18 +27,37 @@ def home(request):
     courses = list()
     for erdcourse in erdcourses:
         courses.append(Course.objects.get(course_number=erdcourse.course_number.course_number))
+
+        data_dict1 = {}
+        search_data1 = request.GET.get('q', "")
+        if search_data1:
+            if search_data1.isdigit():
+                data_dict1["course_number__contains"] = search_data1
+            else:
+                data_dict1["course_name__contains"] = search_data1
+
+        #courses = Course.objects.get(course_number=erdcourse.course_number.course_number)
+        #courses = Course.objects.filter(course_number=erdcourse.course_number.course_number).filter(**data_dict1)
+
         print(erdcourse.course_number.course_number)
         print(Course.objects.get(course_number=erdcourse.course_number.course_number))
+        #print(Course.objects.filter(course_number=erdcourse.course_number.course_number).filter(**data_dict1))
+
+    
     return render(request, 'home.html', {
-        'courses': courses
+        'courses': courses#, "search_data": search_data1
     })
 
 def course(request):
     student_number = request.session.get("info")
     data_dict = {}
-    xx = request.GET.get('q')
-    if xx:
-        data_dict["course_number__contains"] = xx
+    search_data = request.GET.get('q', "")
+    if search_data:
+        if search_data.isdigit():
+            data_dict["course_number__contains"] = search_data
+        else:
+            data_dict["course_name__contains"] = search_data
+    
     #all
     # 
     # class search(View):
@@ -51,5 +70,5 @@ def course(request):
 #
     courses_list = Course.objects.all().filter(**data_dict)
     return render(request, 'course.html', {
-        'courses': courses_list
+        'courses': courses_list, "search_data": search_data
     })
