@@ -6,6 +6,9 @@ class Middleware(MiddlewareMixin):
         if request.path_info == "/":
             return
 
+        if request.path_info == "/register/":
+            return
+
         info = request.session.get("info")
         if info:
             return

@@ -1,34 +1,41 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StudentLogin</title>
+    <title>Register</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
 </head>
 <body>
+    {% if success %}
+    <div class="alert alert-success" role="alert">
+        Register successfully.
+        <a href="{% url 'index' %}" class="alert-link">Go to Login Page.</a>
+    </div>
+    {% else %}
     <div class="container-fluid">
-        <div class="row justify-content-center" style="margin-top: 200px;">
-            <div class="col-2" style="width: 500px;">
+        <div class="row justify-content-center" style="margin-top: 50px">
+            <div class="col-6">
                 <div class="card bg-light mb-3">
                     <div class="card-header">
-                        <i class="fa-solid fa-address-card fa-lg"></i> Student Login
+                        <i class="fa-solid fa-address-card fa-lg"></i> Student Registration
                     </div>
                     <div class="card-body">
-                      <form action="{% url 'index' %}" method="POST">
+                      <form action="{% url 'register' %}" method="POST">
                         {% csrf_token %}
                         {{ form.as_p }}
-                        <button type="submit" class="btn btn-primary">Login</button>
-                        <a href="{% url 'register' %}" class="btn btn-secondary">Register</a>
+                        <button type="submit" class="btn btn-primary">Register</button>
+                        <a href="{% url 'index' %}" class="btn btn-secondary">Cancel</a>
                       </form>
                     </div>
                   </div>
             </div>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    {% endif %}
 </body>
 </html>
