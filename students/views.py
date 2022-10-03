@@ -31,6 +31,20 @@ def home(request):
         'courses': courses
     })
 
+def course(request):
+    student_number = request.session.get("info")
+    data_dict = {}
+    search_data = request.GET.get('q', "")
+    if search_data:
+        if search_data.isdigit():
+            data_dict["course_number__contains"] = search_data
+        else:
+            data_dict["course_name__contains"] = search_data
+    courses_list = Course.objects.all().filter(**data_dict)
+    return render(request, 'course.html', {
+        'courses': courses_list, "search_data": search_data
+    })
+
 def register(request):
     if request.method == 'POST':
         form = StudentForm(request.POST)
