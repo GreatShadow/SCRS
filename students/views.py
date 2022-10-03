@@ -45,6 +45,9 @@ def course(request):
         'courses': courses_list, "search_data": search_data
     })
 
+def runoob(request):
+    return render(request,'about.html')
+    
 def register(request):
     if request.method == 'POST':
         form = StudentForm(request.POST)
@@ -78,3 +81,5 @@ def register(request):
     return render(request, 'register.html', {
         'form': StudentForm()
     })
+
+    
