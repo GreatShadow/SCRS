@@ -123,3 +123,13 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# configs for recommendations
+# Most similar N students number
+K = 20
+
+# Most similar N courses number
+N = 20
+
+# recommendate if course field is larger than threshold
+RECOMMENDATION_THRESHOLD = 0.2

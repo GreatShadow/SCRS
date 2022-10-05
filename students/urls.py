@@ -8,5 +8,6 @@ urlpatterns = [
     path('home/', views.home, name='home'),
     path('course/', views.course, name='course'),
     path('register/', views.register, name='register'),
-    path('about/',views.runoob)
+    path('about/',views.runoob),
+    path('recommendation/', views.recommendation, name='recommendation'),
 ]
